@@ -1,0 +1,66 @@
+CREATE DATABASE car_workshop
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE car_workshop;
+
+CREATE TABLE customer(
+  id INT(11) AUTO_INCREMENT,
+  firstName VARCHAR(255),
+  lastName VARCHAR(255),
+  birthDate DATE,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE employee(
+    id int(11) AUTO_INCREMENT,
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
+    address VARCHAR(255),
+    telephoneNumber VARCHAR(50),
+    note VARCHAR(255),
+    manHour FLOAT,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE vehicle(
+    id INT(11) AUTO_INCREMENT,
+    brand VARCHAR(255),
+    model VARCHAR(255),
+    productionYear YEAR,
+    registrationNumber VARCHAR(255),
+    nextReview TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE status(
+  id INT(11) AUTO_INCREMENT,
+  accepted TIMESTAMP,
+  approvedRepairCosts TIMESTAMP,
+  inRepair TIMESTAMP,
+  readyForPickup TIMESTAMP,
+  resignation TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE orders(
+  id INT(11) AUTO_INCREMENT,
+  acceptanceForRepair TIMESTAMP,
+  plannedStartOfRepair TIMESTAMP,
+  startingRepair TIMESTAMP,
+  assignedForRepair INT(11),
+  problemDescription VARCHAR(255),
+  repairDescription VARCHAR(255),
+  actualStatus INT(11),
+  repairedVehicle INT(11),
+  costOfUsedParts FLOAT,
+  manHour FLOAT,
+  numberOfManHour INT(11),
+  PRIMARY KEY (id),
+  FOREIGN KEY (assignedForRepair) REFERENCES employee(id),
+  FOREIGN KEY (actualStatus) REFERENCES status(id),
+  FOREIGN KEY (repairedVehicle) REFERENCES vehicle(id)
+);
+
+
+
