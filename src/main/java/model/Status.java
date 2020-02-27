@@ -1,14 +1,19 @@
 package model;
 
+import java.sql.Timestamp;
+
 public class Status {
 
-    private boolean accepted;
-    private boolean approvedRepairCosts;
-    private boolean inRepair;
-    private boolean readyForPickup;
-    private boolean resignation;
+    private int id;
+    private Timestamp accepted;
+    private Timestamp approvedRepairCosts;
+    private Timestamp inRepair;
+    private Timestamp readyForPickup;
+    private Timestamp resignation;
 
-    public Status(boolean accepted, boolean approvedRepairCosts, boolean inRepair, boolean readyForPickup, boolean resignation) {
+    public Status(Timestamp accepted, Timestamp approvedRepairCosts,
+                  Timestamp inRepair, Timestamp readyForPickup,
+                  Timestamp resignation) {
         this.accepted = accepted;
         this.approvedRepairCosts = approvedRepairCosts;
         this.inRepair = inRepair;
@@ -19,43 +24,51 @@ public class Status {
     public Status() {
     }
 
-    public boolean isAccepted() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Timestamp getAccepted() {
         return accepted;
     }
 
-    public void setAccepted(boolean accepted) {
+    public void setAccepted(Timestamp accepted) {
         this.accepted = accepted;
     }
 
-    public boolean isApprovedRepairCosts() {
+    public Timestamp getApprovedRepairCosts() {
         return approvedRepairCosts;
     }
 
-    public void setApprovedRepairCosts(boolean approvedRepairCosts) {
+    public void setApprovedRepairCosts(Timestamp approvedRepairCosts) {
         this.approvedRepairCosts = approvedRepairCosts;
     }
 
-    public boolean isInRepair() {
+    public Timestamp getInRepair() {
         return inRepair;
     }
 
-    public void setInRepair(boolean inRepair) {
+    public void setInRepair(Timestamp inRepair) {
         this.inRepair = inRepair;
     }
 
-    public boolean isReadyForPickup() {
+    public Timestamp getReadyForPickup() {
         return readyForPickup;
     }
 
-    public void setReadyForPickup(boolean readyForPickup) {
+    public void setReadyForPickup(Timestamp readyForPickup) {
         this.readyForPickup = readyForPickup;
     }
 
-    public boolean isResignation() {
+    public Timestamp getResignation() {
         return resignation;
     }
 
-    public void setResignation(boolean resignation) {
+    public void setResignation(Timestamp resignation) {
         this.resignation = resignation;
     }
 

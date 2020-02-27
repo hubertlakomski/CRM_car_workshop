@@ -1,17 +1,18 @@
 package model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Vehicle {
 
     private int id;
     private String brand;
     private String model;
-    private double productionYear;
+    private Date productionYear;
     private String registrationNumber;
-    private Date nextReview;
+    private Timestamp nextReview;
 
-    public Vehicle(String brand, String model, double productionYear, String registrationNumber, Date nextReview) {
+    public Vehicle(String brand, String model, Date productionYear, String registrationNumber, Timestamp nextReview) {
         this.brand = brand;
         this.model = model;
         this.productionYear = productionYear;
@@ -46,11 +47,11 @@ public class Vehicle {
         this.model = model;
     }
 
-    public double getProductionYear() {
+    public Date getProductionYear() {
         return productionYear;
     }
 
-    public void setProductionYear(double productionYear) {
+    public void setProductionYear(Date productionYear) {
         this.productionYear = productionYear;
     }
 
@@ -62,11 +63,11 @@ public class Vehicle {
         this.registrationNumber = registrationNumber;
     }
 
-    public Date getNextReview() {
+    public Timestamp getNextReview() {
         return nextReview;
     }
 
-    public void setNextReview(Date nextReview) {
+    public void setNextReview(Timestamp nextReview) {
         this.nextReview = nextReview;
     }
 
