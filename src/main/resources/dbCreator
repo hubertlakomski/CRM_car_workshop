@@ -31,7 +31,7 @@ CREATE TABLE vehicles(
     model VARCHAR(255),
     productionYear YEAR NOT NULL,
     registrationNumber VARCHAR(255),
-    nextReview TIMESTAMP,
+    nextReview TIMESTAMP NULL DEFAULT NULL,
     ownerId INT(11),
     PRIMARY KEY (id),
     FOREIGN KEY (ownerId) REFERENCES customers(id)
