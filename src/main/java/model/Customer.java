@@ -15,6 +15,10 @@ public class Customer {
         this.birthDate = birthDate;
     }
 
+    public Customer() {
+
+    }
+
     public int getId() {
         return id;
     }
