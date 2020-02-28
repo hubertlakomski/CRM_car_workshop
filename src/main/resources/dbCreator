@@ -29,21 +29,21 @@ CREATE TABLE vehicles(
     id INT(11) AUTO_INCREMENT,
     brand VARCHAR(255),
     model VARCHAR(255),
-    productionYear YEAR,
+    productionYear YEAR NOT NULL,
     registrationNumber VARCHAR(255),
     nextReview TIMESTAMP,
-    owner INT(11),
+    ownerId INT(11),
     PRIMARY KEY (id),
-    FOREIGN KEY (owner) REFERENCES customers(id)
+    FOREIGN KEY (ownerId) REFERENCES customers(id)
 );
 
 CREATE TABLE statuses(
   id INT(11) AUTO_INCREMENT,
-  accepted TIMESTAMP,
-  approvedRepairCosts TIMESTAMP,
-  inRepair TIMESTAMP,
-  readyForPickup TIMESTAMP,
-  resignation TIMESTAMP,
+  accepted TINYINT(1),
+  approvedRepairCosts TINYINT(1),
+  inRepair TINYINT(1),
+  readyForPickup TINYINT(1),
+  resignation TINYINT(1),
   PRIMARY KEY (id)
 );
 
@@ -52,18 +52,18 @@ CREATE TABLE orders(
   acceptanceForRepair TIMESTAMP,
   plannedStartOfRepair TIMESTAMP,
   startingRepair TIMESTAMP,
-  assignedForRepair INT(11),
+  assignedForRepairId INT(11),
   problemDescription VARCHAR(255),
   repairDescription VARCHAR(255),
-  actualStatus INT(11),
-  repairedVehicle INT(11),
+  actualStatusId INT(11),
+  repairedVehicleId INT(11),
   costOfUsedParts FLOAT,
   manHour FLOAT,
   numberOfManHour INT(11),
   PRIMARY KEY (id),
-  FOREIGN KEY (assignedForRepair) REFERENCES employees(id),
-  FOREIGN KEY (actualStatus) REFERENCES statuses(id),
-  FOREIGN KEY (repairedVehicle) REFERENCES vehicles(id)
+  FOREIGN KEY (assignedForRepairId) REFERENCES employees(id),
+  FOREIGN KEY (actualStatusId) REFERENCES statuses(id),
+  FOREIGN KEY (repairedVehicleId) REFERENCES vehicles(id)
 );
 
 
