@@ -3,10 +3,7 @@ package dao;
 import model.Employee;
 import util.DbUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class EmployeeDao {
 
@@ -24,7 +21,7 @@ public class EmployeeDao {
         try(Connection connection = DbUtil.getConn())
         {
             PreparedStatement statement =
-                    connection.prepareStatement(CREATE_EMPLOYEE_QUERY);
+                    connection.prepareStatement(CREATE_EMPLOYEE_QUERY, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, employee.getFirstName());
             statement.setString(2, employee.getLastName());
