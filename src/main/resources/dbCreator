@@ -8,17 +8,17 @@ SET SQL_MODE='ALLOW_INVALID_DATES';
 
 CREATE TABLE customers(
   id INT(11) AUTO_INCREMENT,
-  firstName VARCHAR(255),
-  lastName VARCHAR(255),
+  firstName VARCHAR(255) NOT NULL,
+  lastName VARCHAR(255) NOT NULL,
   birthDate DATE,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE employees(
     id int(11) AUTO_INCREMENT,
-    firstName VARCHAR(255),
-    lastName VARCHAR(255),
-    address VARCHAR(255),
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
     telephoneNumber VARCHAR(50),
     note VARCHAR(255),
     manHour FLOAT,
@@ -27,12 +27,12 @@ CREATE TABLE employees(
 
 CREATE TABLE vehicles(
     id INT(11) AUTO_INCREMENT,
-    brand VARCHAR(255),
-    model VARCHAR(255),
+    brand VARCHAR(255) NOT NULL,
+    model VARCHAR(255) NOT NULL,
     productionYear YEAR NOT NULL,
-    registrationNumber VARCHAR(255),
+    registrationNumber VARCHAR(255) NOT NULL,
     nextReview TIMESTAMP NULL DEFAULT NULL,
-    ownerId INT(11),
+    ownerId INT(11) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (ownerId) REFERENCES customers(id)
 );
@@ -49,14 +49,14 @@ CREATE TABLE statuses(
 
 CREATE TABLE orders(
   id INT(11) AUTO_INCREMENT,
-  acceptanceForRepair TIMESTAMP,
-  plannedStartOfRepair TIMESTAMP,
-  startingRepair TIMESTAMP,
+  acceptanceForRepair TIMESTAMP NULL DEFAULT NULL,
+  plannedStartOfRepair TIMESTAMP NULL DEFAULT NULL,
+  startingRepair TIMESTAMP NULL DEFAULT NULL,
   assignedForRepairId INT(11),
   problemDescription VARCHAR(255),
   repairDescription VARCHAR(255),
   actualStatusId INT(11),
-  repairedVehicleId INT(11),
+  repairedVehicleId INT(11) NOT NULL,
   costOfUsedParts FLOAT,
   manHour FLOAT,
   numberOfManHour INT(11),
