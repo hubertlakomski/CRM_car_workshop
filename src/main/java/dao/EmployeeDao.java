@@ -93,6 +93,7 @@ public class EmployeeDao {
             statement.setString(4, employee.getTelephoneNumber());
             statement.setString(5, employee.getNote());
             statement.setDouble(6, employee.getPerHour());
+            statement.setInt(7, employee.getId());
 
             statement.executeUpdate();
         }
