@@ -11,13 +11,16 @@ public class Vehicle {
     private Date productionYear;
     private String registrationNumber;
     private Timestamp nextReview;
+    private Customer owner;
 
-    public Vehicle(String brand, String model, Date productionYear, String registrationNumber, Timestamp nextReview) {
+    public Vehicle(int id, String brand, String model, Date productionYear, String registrationNumber, Timestamp nextReview, Customer owner) {
+        this.id = id;
         this.brand = brand;
         this.model = model;
         this.productionYear = productionYear;
         this.registrationNumber = registrationNumber;
         this.nextReview = nextReview;
+        this.owner = owner;
     }
 
     public Vehicle() {
@@ -69,6 +72,14 @@ public class Vehicle {
 
     public void setNextReview(Timestamp nextReview) {
         this.nextReview = nextReview;
+    }
+
+    public Customer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Customer owner) {
+        this.owner = owner;
     }
 
     @Override

@@ -32,7 +32,9 @@ CREATE TABLE vehicles(
     productionYear YEAR,
     registrationNumber VARCHAR(255),
     nextReview TIMESTAMP,
-    PRIMARY KEY (id)
+    owner INT(11),
+    PRIMARY KEY (id),
+    FOREIGN KEY (owner) REFERENCES customers(id)
 );
 
 CREATE TABLE statuses(
