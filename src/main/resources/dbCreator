@@ -1,10 +1,12 @@
-CREATE DATABASE car_workshop
+CREATE DATABASE crm
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-USE car_workshop;
+USE crm;
 
-CREATE TABLE customer(
+SET SQL_MODE='ALLOW_INVALID_DATES';
+
+CREATE TABLE customers(
   id INT(11) AUTO_INCREMENT,
   firstName VARCHAR(255),
   lastName VARCHAR(255),
@@ -12,7 +14,7 @@ CREATE TABLE customer(
   PRIMARY KEY (id)
 );
 
-CREATE TABLE employee(
+CREATE TABLE employees(
     id int(11) AUTO_INCREMENT,
     firstName VARCHAR(255),
     lastName VARCHAR(255),
@@ -23,7 +25,7 @@ CREATE TABLE employee(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE vehicle(
+CREATE TABLE vehicles(
     id INT(11) AUTO_INCREMENT,
     brand VARCHAR(255),
     model VARCHAR(255),
@@ -33,7 +35,7 @@ CREATE TABLE vehicle(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE status(
+CREATE TABLE statuses(
   id INT(11) AUTO_INCREMENT,
   accepted TIMESTAMP,
   approvedRepairCosts TIMESTAMP,
@@ -57,9 +59,9 @@ CREATE TABLE orders(
   manHour FLOAT,
   numberOfManHour INT(11),
   PRIMARY KEY (id),
-  FOREIGN KEY (assignedForRepair) REFERENCES employee(id),
-  FOREIGN KEY (actualStatus) REFERENCES status(id),
-  FOREIGN KEY (repairedVehicle) REFERENCES vehicle(id)
+  FOREIGN KEY (assignedForRepair) REFERENCES employees(id),
+  FOREIGN KEY (actualStatus) REFERENCES statuses(id),
+  FOREIGN KEY (repairedVehicle) REFERENCES vehicles(id)
 );
 
 
