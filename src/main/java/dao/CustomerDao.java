@@ -1,6 +1,7 @@
 package dao;
 
 import model.Customer;
+import util.DbUtil;
 
 import java.sql.*;
 
