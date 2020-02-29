@@ -1,13 +1,13 @@
 package model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Order {
 
     private int id;
-    private Date acceptanceForRepair;
-    private Date plannedStartOfRepair;
-    private Date startingRepair;
+    private Timestamp acceptanceForRepair;
+    private Timestamp plannedStartOfRepair;
+    private Timestamp startingRepair;
     private Employee assignedForRepair;
     private String problemDescription;
     private String repairDescription;
@@ -18,12 +18,10 @@ public class Order {
     private double manHour;
     private double numberOfManHour;
 
-    public Order(Date acceptanceForRepair, Date plannedStartOfRepair,
-                 Date startingRepair, Employee assignedForRepair,
-                 String problemDescription, String repairDescription,
-                 Status actualStatus, Vehicle repairedVehicle,
-                 double customerRepairCost, double costOfUsedParts,
-                 double numberOfManHour) {
+    public Order(Timestamp acceptanceForRepair, Timestamp plannedStartOfRepair,
+                 Timestamp startingRepair, Employee assignedForRepair, String problemDescription,
+                 String repairDescription, Status actualStatus, Vehicle repairedVehicle,
+                 double customerRepairCost, double costOfUsedParts, double manHour, double numberOfManHour) {
         this.acceptanceForRepair = acceptanceForRepair;
         this.plannedStartOfRepair = plannedStartOfRepair;
         this.startingRepair = startingRepair;
@@ -34,7 +32,7 @@ public class Order {
         this.repairedVehicle = repairedVehicle;
         this.customerRepairCost = customerRepairCost;
         this.costOfUsedParts = costOfUsedParts;
-        this.manHour = this.assignedForRepair.getPerHour();
+        this.manHour = manHour;
         this.numberOfManHour = numberOfManHour;
     }
 
@@ -49,27 +47,27 @@ public class Order {
         this.id = id;
     }
 
-    public Date getAcceptanceForRepair() {
+    public Timestamp getAcceptanceForRepair() {
         return acceptanceForRepair;
     }
 
-    public void setAcceptanceForRepair(Date acceptanceForRepair) {
+    public void setAcceptanceForRepair(Timestamp acceptanceForRepair) {
         this.acceptanceForRepair = acceptanceForRepair;
     }
 
-    public Date getPlannedStartOfRepair() {
+    public Timestamp getPlannedStartOfRepair() {
         return plannedStartOfRepair;
     }
 
-    public void setPlannedStartOfRepair(Date plannedStartOfRepair) {
+    public void setPlannedStartOfRepair(Timestamp plannedStartOfRepair) {
         this.plannedStartOfRepair = plannedStartOfRepair;
     }
 
-    public Date getStartingRepair() {
+    public Timestamp getStartingRepair() {
         return startingRepair;
     }
 
-    public void setStartingRepair(Date startingRepair) {
+    public void setStartingRepair(Timestamp startingRepair) {
         this.startingRepair = startingRepair;
     }
 
