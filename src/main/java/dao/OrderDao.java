@@ -68,7 +68,7 @@ public class OrderDao {
         statement.setFloat(11, (float) order.getNumberOfManHour());
     }
 
-    public Order create (int orderId){
+    public Order read (int orderId){
 
         try(Connection connection = DbUtil.getConn())
         {
