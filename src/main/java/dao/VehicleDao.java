@@ -67,7 +67,7 @@ public class VehicleDao {
                 vehicle.setNextReview(resultSet.getTimestamp("nextReview"));
 
                 CustomerDao customerDao = new CustomerDao();
-                Customer vehicleOwner = customerDao.read(resultSet.getInt("customerId"));
+                Customer vehicleOwner = customerDao.read(resultSet.getInt("ownerId"));
 
                 vehicle.setOwner(vehicleOwner);
 
