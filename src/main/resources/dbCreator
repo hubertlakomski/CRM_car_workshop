@@ -59,7 +59,7 @@ CREATE TABLE orders(
   repairedVehicleId INT(11) NOT NULL,
   costOfUsedParts FLOAT,
   manHour FLOAT,
-  numberOfManHour INT(11),
+  numberOfManHour FLOAT,
   PRIMARY KEY (id),
   FOREIGN KEY (assignedForRepairId) REFERENCES employees(id),
   FOREIGN KEY (actualStatusId) REFERENCES statuses(id),
