@@ -54,8 +54,8 @@ public class Vehicle {
         return productionYear;
     }
 
-    public void setProductionYear(Date productionYear) {
-        this.productionYear = productionYear.getYear();
+    public void setProductionYear(int productionYear) {
+        this.productionYear = productionYear;
     }
 
     public String getRegistrationNumber() {
