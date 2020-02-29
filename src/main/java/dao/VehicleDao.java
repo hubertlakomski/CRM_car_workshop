@@ -26,7 +26,9 @@ public class VehicleDao {
 
             vehicleSetStatement(vehicle, statement);
 
-            ResultSet resultSet = statement.executeQuery();
+            statement.executeUpdate();
+
+            ResultSet resultSet = statement.getGeneratedKeys();
 
             if(resultSet.next()){
 
@@ -60,7 +62,7 @@ public class VehicleDao {
                 vehicle.setId(resultSet.getInt("id"));
                 vehicle.setBrand(resultSet.getString("brand"));
                 vehicle.setModel(resultSet.getString("model"));
-                vehicle.setProductionYear(resultSet.getDate("productionYear"));
+                vehicle.setProductionYear(resultSet.getInt("productionYear"));
                 vehicle.setRegistrationNumber(resultSet.getString("registrationNumber"));
                 vehicle.setNextReview(resultSet.getTimestamp("nextReview"));
 
