@@ -68,6 +68,7 @@ public class EmployeeDao {
                 employee.setLastName(resultSet.getString("lastName"));
                 employee.setAddress(resultSet.getString("address"));
                 employee.setTelephoneNumber(resultSet.getString("telephoneNumber"));
+                employee.setNote(resultSet.getString("note"));
                 employee.setPerHour(resultSet.getDouble("manHour"));
 
                 return employee;
