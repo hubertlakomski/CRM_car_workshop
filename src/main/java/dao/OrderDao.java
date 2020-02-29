@@ -29,7 +29,7 @@ public class OrderDao {
         try(Connection connection = DbUtil.getConn())
         {
             PreparedStatement statement =
-                    connection.prepareStatement(CREATE_ORDER_QUERY);
+                    connection.prepareStatement(CREATE_ORDER_QUERY, Statement.RETURN_GENERATED_KEYS);
 
             statement.setTimestamp(1, order.getAcceptanceForRepair());
             statement.setTimestamp(2, order.getPlannedStartOfRepair());
@@ -100,7 +100,7 @@ public class OrderDao {
                 order.setRepairedVehicle(repairedVehicle);
 
                 order.setCostOfUsedParts(resultSet.getFloat("costOfUsedParts"));
-                order.setManHour(resultSet.getFloat("manHour"));
+                order.setManHour();
                 order.setNumberOfManHour(resultSet.getFloat("numberOfManHour"));
 
                 return order;
