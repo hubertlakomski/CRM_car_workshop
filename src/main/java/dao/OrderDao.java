@@ -31,17 +31,7 @@ public class OrderDao {
             PreparedStatement statement =
                     connection.prepareStatement(CREATE_ORDER_QUERY, Statement.RETURN_GENERATED_KEYS);
 
-            statement.setTimestamp(1, order.getAcceptanceForRepair());
-            statement.setTimestamp(2, order.getPlannedStartOfRepair());
-            statement.setTimestamp(3, order.getStartingRepair());
-            statement.setInt(4, order.getAssignedForRepair().getId());
-            statement.setString(5, order.getProblemDescription());
-            statement.setString(6, order.getRepairDescription());
-            statement.setInt(7, order.getActualStatus().getId());
-            statement.setInt(8, order.getRepairedVehicle().getId());
-            statement.setFloat(9, (float) order.getCostOfUsedParts());
-            statement.setFloat(10, (float) order.getAssignedForRepair().getPerHour());
-            statement.setFloat(11, (float) order.getNumberOfManHour());
+            setOrderPreparedStatement(order, statement);
 
             statement.executeUpdate();
 
@@ -62,6 +52,20 @@ public class OrderDao {
             return null;
         }
 
+    }
+
+    private void setOrderPreparedStatement(Order order, PreparedStatement statement) throws SQLException {
+        statement.setTimestamp(1, order.getAcceptanceForRepair());
+        statement.setTimestamp(2, order.getPlannedStartOfRepair());
+        statement.setTimestamp(3, order.getStartingRepair());
+        statement.setInt(4, order.getAssignedForRepair().getId());
+        statement.setString(5, order.getProblemDescription());
+        statement.setString(6, order.getRepairDescription());
+        statement.setInt(7, order.getActualStatus().getId());
+        statement.setInt(8, order.getRepairedVehicle().getId());
+        statement.setFloat(9, (float) order.getCostOfUsedParts());
+        statement.setFloat(10, (float) order.getAssignedForRepair().getPerHour());
+        statement.setFloat(11, (float) order.getNumberOfManHour());
     }
 
     public Order create (int orderId){
@@ -120,17 +124,7 @@ public class OrderDao {
             PreparedStatement statement =
                     connection.prepareStatement(UPDATE_ORDER_QUERY);
 
-            statement.setTimestamp(1, order.getAcceptanceForRepair());
-            statement.setTimestamp(2, order.getPlannedStartOfRepair());
-            statement.setTimestamp(3, order.getStartingRepair());
-            statement.setInt(4, order.getAssignedForRepair().getId());
-            statement.setString(5, order.getProblemDescription());
-            statement.setString(6, order.getRepairDescription());
-            statement.setInt(7, order.getActualStatus().getId());
-            statement.setInt(8, order.getRepairedVehicle().getId());
-            statement.setFloat(9, (float) order.getCostOfUsedParts());
-            statement.setFloat(10, (float) order.getAssignedForRepair().getPerHour());
-            statement.setFloat(11, (float) order.getNumberOfManHour());
+            setOrderPreparedStatement(order, statement);
             statement.setInt(12, order.getId());
 
             statement.executeUpdate();
