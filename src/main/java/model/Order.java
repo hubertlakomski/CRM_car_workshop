@@ -131,12 +131,12 @@ public class Order {
         return manHour;
     }
 
-    public void setManHour(double manHour) {
-        this.manHour = manHour;
-    }
-
     public double getNumberOfManHour() {
         return numberOfManHour;
+    }
+
+    public void setManHour() {
+        this.manHour = assignedForRepair.getPerHour();
     }
 
     public void setNumberOfManHour(double numberOfManHour) {
