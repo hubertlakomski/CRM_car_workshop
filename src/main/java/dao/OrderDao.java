@@ -7,6 +7,8 @@ import model.Vehicle;
 import util.DbUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDao {
 
@@ -23,6 +25,8 @@ public class OrderDao {
                     "repairedVehicleId=?, costOfUsedParts=?, manHour=?, numberOfManHour=? WHERE id = ?";
     private static final String DELETE_ORDER_QUERY =
             "DELETE FROM orders WHERE id = ?";
+    private static final String FIND_ALL_ORDERS_QUERY =
+            "SELECT * FROM orders";
 
     public Order create (Order order){
 
@@ -54,20 +58,6 @@ public class OrderDao {
 
     }
 
-    private void setOrderPreparedStatement(Order order, PreparedStatement statement) throws SQLException {
-        statement.setTimestamp(1, order.getAcceptanceForRepair());
-        statement.setTimestamp(2, order.getPlannedStartOfRepair());
-        statement.setTimestamp(3, order.getStartingRepair());
-        statement.setInt(4, order.getAssignedForRepair().getId());
-        statement.setString(5, order.getProblemDescription());
-        statement.setString(6, order.getRepairDescription());
-        statement.setInt(7, order.getActualStatus().getId());
-        statement.setInt(8, order.getRepairedVehicle().getId());
-        statement.setFloat(9, (float) order.getCostOfUsedParts());
-        statement.setFloat(10, (float) order.getAssignedForRepair().getPerHour());
-        statement.setFloat(11, (float) order.getNumberOfManHour());
-    }
-
     public Order read (int orderId){
 
         try(Connection connection = DbUtil.getConn())
@@ -89,7 +79,7 @@ public class OrderDao {
                 order.setStartingRepair(resultSet.getTimestamp("startingRepair"));
 
                 EmployeeDao employeeDao = new EmployeeDao();
-                Employee assignedForRepair = employeeDao.read(resultSet.getInt("assignedForRepair"));
+                Employee assignedForRepair = employeeDao.read(resultSet.getInt("assignedForRepairId"));
                 order.setAssignedForRepair(assignedForRepair);
 
                 order.setProblemDescription(resultSet.getString("problemDescription"));
@@ -153,6 +143,71 @@ public class OrderDao {
             e.printStackTrace();
         }
 
+    }
+
+    public List<Order> findAll(){
+
+        try(Connection connection = DbUtil.getConn())
+        {
+            PreparedStatement statement =
+                    connection.prepareStatement(FIND_ALL_ORDERS_QUERY);
+
+            List<Order> orders = new ArrayList<>();
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()){
+
+                Order order = new Order();
+
+                order.setId(resultSet.getInt("id"));
+                order.setAcceptanceForRepair(resultSet.getTimestamp("acceptanceForRepair"));
+                order.setPlannedStartOfRepair(resultSet.getTimestamp("plannedStartOfRepair"));
+                order.setStartingRepair(resultSet.getTimestamp("startingRepair"));
+
+                EmployeeDao employeeDao = new EmployeeDao();
+                Employee assignedForRepair = employeeDao.read(resultSet.getInt("assignedForRepairId"));
+                order.setAssignedForRepair(assignedForRepair);
+
+                order.setProblemDescription(resultSet.getString("problemDescription"));
+                order.setRepairDescription(resultSet.getString("repairDescription"));
+
+                StatusDao statusDao = new StatusDao();
+                Status actualStatus = statusDao.read(resultSet.getInt("actualStatusId"));
+                order.setActualStatus(actualStatus);
+
+                VehicleDao vehicleDao = new VehicleDao();
+                Vehicle repairedVehicle = vehicleDao.read(resultSet.getInt("repairedVehicleId"));
+                order.setRepairedVehicle(repairedVehicle);
+
+                order.setCostOfUsedParts(resultSet.getFloat("costOfUsedParts"));
+                order.setManHour();
+                order.setNumberOfManHour(resultSet.getFloat("numberOfManHour"));
+
+                orders.add(order);
+            }
+
+            return orders;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void setOrderPreparedStatement(Order order, PreparedStatement statement) throws SQLException {
+        statement.setTimestamp(1, order.getAcceptanceForRepair());
+        statement.setTimestamp(2, order.getPlannedStartOfRepair());
+        statement.setTimestamp(3, order.getStartingRepair());
+        statement.setInt(4, order.getAssignedForRepair().getId());
+        statement.setString(5, order.getProblemDescription());
+        statement.setString(6, order.getRepairDescription());
+        statement.setInt(7, order.getActualStatus().getId());
+        statement.setInt(8, order.getRepairedVehicle().getId());
+        statement.setFloat(9, (float) order.getCostOfUsedParts());
+        statement.setFloat(10, (float) order.getAssignedForRepair().getPerHour());
+        statement.setFloat(11, (float) order.getNumberOfManHour());
     }
 
 }
