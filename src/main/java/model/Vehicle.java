@@ -8,12 +8,12 @@ public class Vehicle {
     private int id;
     private String brand;
     private String model;
-    private Date productionYear;
+    private int productionYear;
     private String registrationNumber;
     private Timestamp nextReview;
     private Customer owner;
 
-    public Vehicle(int id, String brand, String model, Date productionYear, String registrationNumber, Timestamp nextReview, Customer owner) {
+    public Vehicle(int id, String brand, String model, int productionYear, String registrationNumber, Timestamp nextReview, Customer owner) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -50,12 +50,12 @@ public class Vehicle {
         this.model = model;
     }
 
-    public Date getProductionYear() {
+    public int getProductionYear() {
         return productionYear;
     }
 
     public void setProductionYear(Date productionYear) {
-        this.productionYear = productionYear;
+        this.productionYear = productionYear.getYear();
     }
 
     public String getRegistrationNumber() {

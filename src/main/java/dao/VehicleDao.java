@@ -122,7 +122,7 @@ public class VehicleDao {
     private void vehicleSetStatement(Vehicle vehicle, PreparedStatement statement) throws SQLException {
         statement.setString(1, vehicle.getBrand());
         statement.setString(2, vehicle.getModel());
-        statement.setDate(3, vehicle.getProductionYear());
+        statement.setInt(3, vehicle.getProductionYear());
         statement.setString(4, vehicle.getRegistrationNumber());
         statement.setTimestamp(5, vehicle.getNextReview());
         statement.setInt(6, vehicle.getOwner().getId());
