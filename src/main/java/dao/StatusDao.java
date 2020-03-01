@@ -16,7 +16,7 @@ public class StatusDao {
     private static final String DELETE_STATUS_QUERY =
             "DELETE FROM statuses WHERE id = ?";
 
-    public Status create (Status status){
+    protected Status create (Status status){
 
         try(Connection connection = DbUtil.getConn())
         {
@@ -107,7 +107,7 @@ public class StatusDao {
         return null;
     }
 
-    public void delete (int statusId){
+    protected void delete (int statusId){
 
         try(Connection connection = DbUtil.getConn())
         {
