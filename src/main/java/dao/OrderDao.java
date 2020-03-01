@@ -35,10 +35,9 @@ public class OrderDao {
             PreparedStatement statement =
                     connection.prepareStatement(CREATE_ORDER_QUERY, Statement.RETURN_GENERATED_KEYS);
 
-            //when the order was created, the status was automatically accepted=true
+            //when order is created, its status is created automatically
             StatusDao statusDao = new StatusDao();
             Status status = new Status();
-            status.setAccepted(true);
             statusDao.create(status);
 
             statement.setTimestamp(1, order.getAcceptanceForRepair());
