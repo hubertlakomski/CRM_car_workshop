@@ -166,6 +166,14 @@ public class OrderDao {
 
             statement.setInt(1, orderId);
 
+            OrderDao orderDao = new OrderDao();
+            Order order = orderDao.read(orderId);
+
+            StatusDao statusDao = new StatusDao();
+            Status status = order.getActualStatus();
+
+            statusDao.delete(status.getId());
+
             statement.executeUpdate();
         }
         catch (SQLException e)
