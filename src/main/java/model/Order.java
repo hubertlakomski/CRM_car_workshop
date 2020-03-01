@@ -11,7 +11,7 @@ public class Order {
     private Employee assignedForRepair;
     private String problemDescription;
     private String repairDescription;
-    private Status actualStatus;
+    private Status status;
     private Vehicle repairedVehicle;
     private double customerRepairCost;
     private double costOfUsedParts;
@@ -20,7 +20,7 @@ public class Order {
 
     public Order(Timestamp acceptanceForRepair, Timestamp plannedStartOfRepair,
                  Timestamp startingRepair, Employee assignedForRepair, String problemDescription,
-                 String repairDescription, Status actualStatus, Vehicle repairedVehicle,
+                 String repairDescription, Status status, Vehicle repairedVehicle,
                  double customerRepairCost, double costOfUsedParts, double manHour, double numberOfManHour) {
         this.acceptanceForRepair = acceptanceForRepair;
         this.plannedStartOfRepair = plannedStartOfRepair;
@@ -28,7 +28,7 @@ public class Order {
         this.assignedForRepair = assignedForRepair;
         this.problemDescription = problemDescription;
         this.repairDescription = repairDescription;
-        this.actualStatus = actualStatus;
+        this.status = status;
         this.repairedVehicle = repairedVehicle;
         this.customerRepairCost = customerRepairCost;
         this.costOfUsedParts = costOfUsedParts;
@@ -95,12 +95,12 @@ public class Order {
         this.repairDescription = repairDescription;
     }
 
-    public Status getActualStatus() {
-        return actualStatus;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setActualStatus(Status actualStatus) {
-        this.actualStatus = actualStatus;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Vehicle getRepairedVehicle() {
@@ -153,7 +153,7 @@ public class Order {
                 ", assignedForRepair=" + assignedForRepair +
                 ", problemDescription='" + problemDescription + '\'' +
                 ", repairDescription='" + repairDescription + '\'' +
-                ", actualStatus=" + actualStatus +
+                ", actualStatus=" + status +
                 ", repairedVehicle=" + repairedVehicle +
                 ", customerRepairCost=" + customerRepairCost +
                 ", costOfUsedParts=" + costOfUsedParts +

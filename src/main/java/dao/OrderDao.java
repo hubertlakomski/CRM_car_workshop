@@ -113,7 +113,7 @@ public class OrderDao {
 
                 StatusDao statusDao = new StatusDao();
                 Status actualStatus = statusDao.read(resultSet.getInt("statusId"));
-                order.setActualStatus(actualStatus);
+                order.setStatus(actualStatus);
 
                 VehicleDao vehicleDao = new VehicleDao();
                 Vehicle repairedVehicle = vehicleDao.read(resultSet.getInt("repairedVehicleId"));
@@ -147,7 +147,7 @@ public class OrderDao {
             statement.setInt(4, order.getAssignedForRepair().getId());
             statement.setString(5, order.getProblemDescription());
             statement.setString(6, order.getRepairDescription());
-            statement.setInt(7, order.getActualStatus().getId());
+            statement.setInt(7, order.getStatus().getId());
             statement.setInt(8, order.getRepairedVehicle().getId());
             statement.setFloat(9, (float) order.getCustomerRepairCost());
             statement.setFloat(10, (float) order.getCostOfUsedParts());
@@ -212,7 +212,7 @@ public class OrderDao {
 
                 StatusDao statusDao = new StatusDao();
                 Status actualStatus = statusDao.read(resultSet.getInt("statusId"));
-                order.setActualStatus(actualStatus);
+                order.setStatus(actualStatus);
 
                 VehicleDao vehicleDao = new VehicleDao();
                 Vehicle repairedVehicle = vehicleDao.read(resultSet.getInt("repairedVehicleId"));
