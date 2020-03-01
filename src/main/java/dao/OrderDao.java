@@ -15,14 +15,14 @@ public class OrderDao {
     private static final String CREATE_ORDER_QUERY =
             "INSERT INTO orders(acceptanceForRepair, plannedStartOfRepair, startingRepair, assignedForRepairId, " +
                     "problemDescription, repairDescription, actualStatusId, " +
-                    "repairedVehicleId, costOfUsedParts, manHour, numberOfManHour) " +
-                    "VALUE(?,?,?,?,?,?,?,?,?,?,?)";
+                    "repairedVehicleId, customerRepairCost,costOfUsedParts, manHour, numberOfManHour) " +
+                    "VALUE(?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String READ_ORDER_QUERY =
             "SELECT * FROM orders WHERE id=?";
     private static final String UPDATE_ORDER_QUERY =
             "UPDATE orders SET acceptanceForRepair=?, plannedStartOfRepair=?, startingRepair=?, assignedForRepairId=?, " +
                     "problemDescription=?, repairDescription=?, actualStatusId=?, " +
-                    "repairedVehicleId=?, costOfUsedParts=?, manHour=?, numberOfManHour=? WHERE id = ?";
+                    "repairedVehicleId=?,customerRepairCost=?, costOfUsedParts=?, manHour=?, numberOfManHour=? WHERE id = ?";
     private static final String DELETE_ORDER_QUERY =
             "DELETE FROM orders WHERE id = ?";
     private static final String FIND_ALL_ORDERS_QUERY =
@@ -93,6 +93,7 @@ public class OrderDao {
                 Vehicle repairedVehicle = vehicleDao.read(resultSet.getInt("repairedVehicleId"));
                 order.setRepairedVehicle(repairedVehicle);
 
+                order.setCustomerRepairCost(resultSet.getFloat("customerRepairCost"));
                 order.setCostOfUsedParts(resultSet.getFloat("costOfUsedParts"));
                 order.setManHour();
                 order.setNumberOfManHour(resultSet.getFloat("numberOfManHour"));
@@ -115,7 +116,7 @@ public class OrderDao {
                     connection.prepareStatement(UPDATE_ORDER_QUERY);
 
             setOrderPreparedStatement(order, statement);
-            statement.setInt(12, order.getId());
+            statement.setInt(13, order.getId());
 
             statement.executeUpdate();
         }
@@ -180,6 +181,7 @@ public class OrderDao {
                 Vehicle repairedVehicle = vehicleDao.read(resultSet.getInt("repairedVehicleId"));
                 order.setRepairedVehicle(repairedVehicle);
 
+                order.setCustomerRepairCost(resultSet.getFloat("customerRepairCost"));
                 order.setCostOfUsedParts(resultSet.getFloat("costOfUsedParts"));
                 order.setManHour();
                 order.setNumberOfManHour(resultSet.getFloat("numberOfManHour"));
@@ -205,9 +207,10 @@ public class OrderDao {
         statement.setString(6, order.getRepairDescription());
         statement.setInt(7, order.getActualStatus().getId());
         statement.setInt(8, order.getRepairedVehicle().getId());
-        statement.setFloat(9, (float) order.getCostOfUsedParts());
-        statement.setFloat(10, (float) order.getAssignedForRepair().getPerHour());
-        statement.setFloat(11, (float) order.getNumberOfManHour());
+        statement.setFloat(9, (float) order.getCustomerRepairCost());
+        statement.setFloat(10, (float) order.getCostOfUsedParts());
+        statement.setFloat(11, (float) order.getAssignedForRepair().getPerHour());
+        statement.setFloat(12, (float) order.getNumberOfManHour());
     }
 
 }

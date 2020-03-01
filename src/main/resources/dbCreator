@@ -57,6 +57,7 @@ CREATE TABLE orders(
   repairDescription VARCHAR(255),
   actualStatusId INT(11),
   repairedVehicleId INT(11) NOT NULL,
+  customerRepairCost FLOAT,
   costOfUsedParts FLOAT,
   manHour FLOAT,
   numberOfManHour FLOAT,
