@@ -14,14 +14,16 @@ public class OrderDao {
 
     private static final String CREATE_ORDER_QUERY =
             "INSERT INTO orders(acceptanceForRepair, plannedStartOfRepair, startingRepair, assignedForRepairId, " +
-                    "problemDescription, repairDescription, actualStatusId, " +
+                    "problemDescription, repairDescription, statusId, " +
                     "repairedVehicleId, customerRepairCost,costOfUsedParts, manHour, numberOfManHour) " +
-                    "VALUE(?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String CREATE_ORDER_STATUS_QUERY =
+            "INSERT INTO orderStatus(orderId, statusId) VALUES (?,?)";
     private static final String READ_ORDER_QUERY =
             "SELECT * FROM orders WHERE id=?";
     private static final String UPDATE_ORDER_QUERY =
             "UPDATE orders SET acceptanceForRepair=?, plannedStartOfRepair=?, startingRepair=?, assignedForRepairId=?, " +
-                    "problemDescription=?, repairDescription=?, actualStatusId=?, " +
+                    "problemDescription=?, repairDescription=?, statusId=?, " +
                     "repairedVehicleId=?,customerRepairCost=?, costOfUsedParts=?, manHour=?, numberOfManHour=? WHERE id = ?";
     private static final String DELETE_ORDER_QUERY =
             "DELETE FROM orders WHERE id = ?";
@@ -53,8 +55,6 @@ public class OrderDao {
             statement.setFloat(11, (float) order.getAssignedForRepair().getPerHour());
             statement.setFloat(12, (float) order.getNumberOfManHour());
 
-
-
             statement.executeUpdate();
 
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -64,6 +64,14 @@ public class OrderDao {
                 order.setId(resultSet.getInt(1));
 
             }
+            //associating the orders table id with the statuses table id
+            PreparedStatement addOrderStatus =
+                    connection.prepareStatement(CREATE_ORDER_STATUS_QUERY);
+
+            addOrderStatus.setInt(1, order.getId());
+            addOrderStatus.setInt(2, status.getId());
+
+            addOrderStatus.executeUpdate();
 
             return order;
         }
