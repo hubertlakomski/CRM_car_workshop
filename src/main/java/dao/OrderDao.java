@@ -35,7 +35,26 @@ public class OrderDao {
             PreparedStatement statement =
                     connection.prepareStatement(CREATE_ORDER_QUERY, Statement.RETURN_GENERATED_KEYS);
 
-            setOrderPreparedStatement(order, statement);
+            //when the order was created, the status was automatically accepted=true
+            StatusDao statusDao = new StatusDao();
+            Status status = new Status();
+            status.setAccepted(true);
+            statusDao.create(status);
+
+            statement.setTimestamp(1, order.getAcceptanceForRepair());
+            statement.setTimestamp(2, order.getPlannedStartOfRepair());
+            statement.setTimestamp(3, order.getStartingRepair());
+            statement.setInt(4, order.getAssignedForRepair().getId());
+            statement.setString(5, order.getProblemDescription());
+            statement.setString(6, order.getRepairDescription());
+            statement.setInt(7, status.getId());
+            statement.setInt(8, order.getRepairedVehicle().getId());
+            statement.setFloat(9, (float) order.getCustomerRepairCost());
+            statement.setFloat(10, (float) order.getCostOfUsedParts());
+            statement.setFloat(11, (float) order.getAssignedForRepair().getPerHour());
+            statement.setFloat(12, (float) order.getNumberOfManHour());
+
+
 
             statement.executeUpdate();
 
@@ -86,7 +105,7 @@ public class OrderDao {
                 order.setRepairDescription(resultSet.getString("repairDescription"));
 
                 StatusDao statusDao = new StatusDao();
-                Status actualStatus = statusDao.read(resultSet.getInt("actualStatusId"));
+                Status actualStatus = statusDao.read(resultSet.getInt("statusId"));
                 order.setActualStatus(actualStatus);
 
                 VehicleDao vehicleDao = new VehicleDao();
@@ -115,7 +134,18 @@ public class OrderDao {
             PreparedStatement statement =
                     connection.prepareStatement(UPDATE_ORDER_QUERY);
 
-            setOrderPreparedStatement(order, statement);
+            statement.setTimestamp(1, order.getAcceptanceForRepair());
+            statement.setTimestamp(2, order.getPlannedStartOfRepair());
+            statement.setTimestamp(3, order.getStartingRepair());
+            statement.setInt(4, order.getAssignedForRepair().getId());
+            statement.setString(5, order.getProblemDescription());
+            statement.setString(6, order.getRepairDescription());
+            statement.setInt(7, order.getActualStatus().getId());
+            statement.setInt(8, order.getRepairedVehicle().getId());
+            statement.setFloat(9, (float) order.getCustomerRepairCost());
+            statement.setFloat(10, (float) order.getCostOfUsedParts());
+            statement.setFloat(11, (float) order.getAssignedForRepair().getPerHour());
+            statement.setFloat(12, (float) order.getNumberOfManHour());
             statement.setInt(13, order.getId());
 
             statement.executeUpdate();
@@ -174,7 +204,7 @@ public class OrderDao {
                 order.setRepairDescription(resultSet.getString("repairDescription"));
 
                 StatusDao statusDao = new StatusDao();
-                Status actualStatus = statusDao.read(resultSet.getInt("actualStatusId"));
+                Status actualStatus = statusDao.read(resultSet.getInt("statusId"));
                 order.setActualStatus(actualStatus);
 
                 VehicleDao vehicleDao = new VehicleDao();
@@ -196,21 +226,6 @@ public class OrderDao {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private void setOrderPreparedStatement(Order order, PreparedStatement statement) throws SQLException {
-        statement.setTimestamp(1, order.getAcceptanceForRepair());
-        statement.setTimestamp(2, order.getPlannedStartOfRepair());
-        statement.setTimestamp(3, order.getStartingRepair());
-        statement.setInt(4, order.getAssignedForRepair().getId());
-        statement.setString(5, order.getProblemDescription());
-        statement.setString(6, order.getRepairDescription());
-        statement.setInt(7, order.getActualStatus().getId());
-        statement.setInt(8, order.getRepairedVehicle().getId());
-        statement.setFloat(9, (float) order.getCustomerRepairCost());
-        statement.setFloat(10, (float) order.getCostOfUsedParts());
-        statement.setFloat(11, (float) order.getAssignedForRepair().getPerHour());
-        statement.setFloat(12, (float) order.getNumberOfManHour());
     }
 
 }
