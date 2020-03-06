@@ -44,7 +44,8 @@ CREATE TABLE statuses(
   inRepair TINYINT(1),
   readyForPickup TINYINT(1),
   resignation TINYINT(1),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  FOREIGN KEY (id) REFERENCES orders(id) ON DELETE CASCADE
 );
 
 CREATE TABLE orders(
@@ -63,7 +64,6 @@ CREATE TABLE orders(
   numberOfManHour FLOAT,
   PRIMARY KEY (id),
   FOREIGN KEY (assignedForRepairId) REFERENCES employees(id),
-  FOREIGN KEY (statusId) REFERENCES statuses(id) ON DELETE CASCADE,
   FOREIGN KEY (repairedVehicleId) REFERENCES vehicles(id)
 );
 
@@ -73,6 +73,3 @@ CREATE TABLE orderStatus(
   FOREIGN KEY (orderId) REFERENCES orders(id),
   FOREIGN KEY (statusId) REFERENCES orders(statusId)
 );
-
-
-
