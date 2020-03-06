@@ -11,6 +11,8 @@ public class StatusDao {
             "INSERT INTO statuses(accepted, approvedRepairCosts, inRepair, readyForPickup, resignation) VALUES (?,?,?,?,?)";
     private static final String READ_STATUS_QUERY =
             "SELECT * FROM statuses WHERE id = ?";
+    private static final String READ_ORDERID_QUERY =
+            "SELECT orderId FROM orderStatus WHERE statusId = ?";
     private static final String UPDATE_STATUS_QUERY =
             "UPDATE statuses SET accepted=?, approvedRepairCosts=?, inRepair=?, readyForPickup=?, resignation=? WHERE id = ?";
     private static final String DELETE_STATUS_QUERY =
@@ -80,6 +82,31 @@ public class StatusDao {
         }
 
         return null;
+    }
+    public int readOrderId (int statusId){
+
+        try(Connection connection = DbUtil.getConn())
+        {
+            PreparedStatement statement =
+                    connection.prepareStatement(READ_ORDERID_QUERY);
+
+            statement.setInt(1, statusId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()){
+
+                System.out.println(resultSet.getString(1));
+                return resultSet.getInt(1);
+            }
+        }
+
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
     public Status update(Status status){
