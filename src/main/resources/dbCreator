@@ -66,10 +66,3 @@ CREATE TABLE orders(
   FOREIGN KEY (assignedForRepairId) REFERENCES employees(id),
   FOREIGN KEY (repairedVehicleId) REFERENCES vehicles(id)
 );
-
-CREATE TABLE orderStatus(
-  orderId INT(11),
-  statusId INT(11),
-  FOREIGN KEY (orderId) REFERENCES orders(id),
-  FOREIGN KEY (statusId) REFERENCES orders(statusId)
-);

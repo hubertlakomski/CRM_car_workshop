@@ -17,8 +17,6 @@ public class OrderDao {
                     "problemDescription, repairDescription, statusId, " +
                     "repairedVehicleId, customerRepairCost,costOfUsedParts, manHour, numberOfManHour) " +
                     "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String CREATE_ORDER_STATUS_QUERY =
-            "INSERT INTO orderStatus(orderId, statusId) VALUES (?,?)";
     private static final String READ_ORDER_QUERY =
             "SELECT * FROM orders WHERE id=?";
     private static final String UPDATE_ORDER_QUERY =
@@ -64,14 +62,6 @@ public class OrderDao {
                 order.setId(resultSet.getInt(1));
 
             }
-            //associating the orders table id with the statuses table id
-            PreparedStatement addOrderStatus =
-                    connection.prepareStatement(CREATE_ORDER_STATUS_QUERY);
-
-            addOrderStatus.setInt(1, order.getId());
-            addOrderStatus.setInt(2, status.getId());
-
-            addOrderStatus.executeUpdate();
 
             return order;
         }
