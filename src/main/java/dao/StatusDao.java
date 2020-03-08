@@ -1,5 +1,6 @@
 package dao;
 
+import model.Order;
 import model.Status;
 import util.DbUtil;
 
@@ -8,21 +9,26 @@ import java.sql.*;
 public class StatusDao {
 
     private static final String CREATE_STATUS_QUERY =
-            "INSERT INTO statuses(accepted, approvedRepairCosts, inRepair, readyForPickup, resignation) VALUES (?,?,?,?,?)";
+            "INSERT INTO statuses(accepted, approvedRepairCosts, inRepair, readyForPickup, resignation, orderId) VALUES (?,?,?,?,?,?)";
     private static final String READ_STATUS_QUERY =
-            "SELECT * FROM statuses WHERE id = ?";
+            "SELECT * FROM statuses WHERE orderId = ?";
     private static final String UPDATE_STATUS_QUERY =
-            "UPDATE statuses SET accepted=?, approvedRepairCosts=?, inRepair=?, readyForPickup=?, resignation=? WHERE id = ?";
+            "UPDATE statuses SET accepted=?, approvedRepairCosts=?, inRepair=?, readyForPickup=?, resignation=? WHERE orderId = ?";
     private static final String DELETE_STATUS_QUERY =
-            "DELETE FROM statuses WHERE id = ?";
+            "DELETE FROM statuses WHERE orderId = ?";
 
     protected Status create (Status status){
 
         try(Connection connection = DbUtil.getConn())
         {
             PreparedStatement statement =
-                    connection.prepareStatement(CREATE_STATUS_QUERY, Statement.RETURN_GENERATED_KEYS);
+                    connection.prepareStatement(CREATE_STATUS_QUERY);
 
+            OrderDao orderDao = new OrderDao();
+
+            Order order = orderDao.read(status.getOrder().getId());
+
+            statement.setInt(6, order.getId());
             statement.setBoolean(1, status.isAccepted());
             statement.setBoolean(2, status.isApprovedRepairCosts());
             statement.setBoolean(3, status.isInRepair());
@@ -30,13 +36,6 @@ public class StatusDao {
             statement.setBoolean(5, status.isResignation());
 
             statement.executeUpdate();
-
-            ResultSet resultSet = statement.getGeneratedKeys();
-
-            if(resultSet.next())
-            {
-                status.setId(resultSet.getInt(1));
-            }
 
             return status;
         }
@@ -63,7 +62,9 @@ public class StatusDao {
 
                 Status status = new Status();
 
-                status.setId(resultSet.getInt("id"));
+                OrderDao orderDao = new OrderDao();
+
+                status.setOrder(orderDao.read(resultSet.getInt("orderId")));
                 status.setAccepted(resultSet.getBoolean("accepted"));
                 status.setApprovedRepairCosts(resultSet.getBoolean("approvedRepairCosts"));
                 status.setInRepair(resultSet.getBoolean("inRepair"));
@@ -95,7 +96,7 @@ public class StatusDao {
             statement.setBoolean(3, status.isInRepair());
             statement.setBoolean(4, status.isReadyForPickup());
             statement.setBoolean(5, status.isResignation());
-            statement.setInt(6, status.getId());
+            statement.setInt(6, status.getOrder().getId());
 
             statement.executeUpdate();
 

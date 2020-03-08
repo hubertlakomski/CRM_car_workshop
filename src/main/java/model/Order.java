@@ -11,7 +11,6 @@ public class Order {
     private Employee assignedForRepair;
     private String problemDescription;
     private String repairDescription;
-    private Status status;
     private Vehicle repairedVehicle;
     private double customerRepairCost;
     private double costOfUsedParts;
@@ -28,7 +27,6 @@ public class Order {
         this.assignedForRepair = assignedForRepair;
         this.problemDescription = problemDescription;
         this.repairDescription = repairDescription;
-        this.status = status;
         this.repairedVehicle = repairedVehicle;
         this.customerRepairCost = customerRepairCost;
         this.costOfUsedParts = costOfUsedParts;
@@ -95,14 +93,6 @@ public class Order {
         this.repairDescription = repairDescription;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public Vehicle getRepairedVehicle() {
         return repairedVehicle;
     }
@@ -153,7 +143,6 @@ public class Order {
                 ", assignedForRepair=" + assignedForRepair +
                 ", problemDescription='" + problemDescription + '\'' +
                 ", repairDescription='" + repairDescription + '\'' +
-                ", actualStatus=" + status +
                 ", repairedVehicle=" + repairedVehicle +
                 ", customerRepairCost=" + customerRepairCost +
                 ", costOfUsedParts=" + costOfUsedParts +

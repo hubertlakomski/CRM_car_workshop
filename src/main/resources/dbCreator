@@ -37,17 +37,6 @@ CREATE TABLE vehicles(
     FOREIGN KEY (ownerId) REFERENCES customers(id)
 );
 
-CREATE TABLE statuses(
-  id INT(11) AUTO_INCREMENT,
-  accepted TINYINT(1),
-  approvedRepairCosts TINYINT(1),
-  inRepair TINYINT(1),
-  readyForPickup TINYINT(1),
-  resignation TINYINT(1),
-  PRIMARY KEY (id),
-  FOREIGN KEY (id) REFERENCES orders(id) ON DELETE CASCADE
-);
-
 CREATE TABLE orders(
   id INT(11) AUTO_INCREMENT,
   acceptanceForRepair TIMESTAMP NULL DEFAULT NULL,
@@ -56,7 +45,6 @@ CREATE TABLE orders(
   assignedForRepairId INT(11),
   problemDescription VARCHAR(255),
   repairDescription VARCHAR(255),
-  statusId INT(11),
   repairedVehicleId INT(11) NOT NULL,
   customerRepairCost FLOAT,
   costOfUsedParts FLOAT,
@@ -65,4 +53,15 @@ CREATE TABLE orders(
   PRIMARY KEY (id),
   FOREIGN KEY (assignedForRepairId) REFERENCES employees(id),
   FOREIGN KEY (repairedVehicleId) REFERENCES vehicles(id)
+);
+
+CREATE TABLE statuses(
+ orderId INT(11),
+ accepted TINYINT(1),
+ approvedRepairCosts TINYINT(1),
+ inRepair TINYINT(1),
+ readyForPickup TINYINT(1),
+ resignation TINYINT(1),
+ PRIMARY KEY (orderId),
+ FOREIGN KEY (orderId) REFERENCES orders(id)
 );

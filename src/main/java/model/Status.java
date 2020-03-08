@@ -2,14 +2,15 @@ package model;
 
 public class Status {
 
-    private int id;
+    private Order order;
     private boolean accepted;
     private boolean approvedRepairCosts;
     private boolean inRepair;
     private boolean readyForPickup;
     private boolean resignation;
 
-    public Status(boolean accepted, boolean approvedRepairCosts, boolean inRepair, boolean readyForPickup, boolean resignation) {
+    public Status(Order order, boolean accepted, boolean approvedRepairCosts, boolean inRepair, boolean readyForPickup, boolean resignation) {
+        this.order = order;
         this.accepted = accepted;
         this.approvedRepairCosts = approvedRepairCosts;
         this.inRepair = inRepair;
@@ -18,14 +19,15 @@ public class Status {
     }
 
     public Status() {
+
     }
 
-    public int getId() {
-        return id;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public boolean isAccepted() {
@@ -71,7 +73,8 @@ public class Status {
     @Override
     public String toString() {
         return "Status{" +
-                "accepted=" + accepted +
+                "order=" + order +
+                ", accepted=" + accepted +
                 ", approvedRepairCosts=" + approvedRepairCosts +
                 ", inRepair=" + inRepair +
                 ", readyForPickup=" + readyForPickup +
